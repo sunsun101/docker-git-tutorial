@@ -33,7 +33,7 @@ async def convert_to_csv(request: Request):
 def name_to_base64(name: str):
     if (name.lower() == "sunsun"):
         try:
-            response = requests.get('http://backend_ase64:8000/convert_to_base64?term=' + name.lower())
+            response = requests.get('http://backend_base64:8000/convert_to_base64?term=' + name.lower())
             return response.json()
         except Exception as e:
             return {"error": f"Error calling API: {str(e)}"}

@@ -9,9 +9,9 @@ services:
     volumes:
       - ./backend_main/src:/home/src
 
-  backend_ase64:
+  backend_base64:
     build: 
-      context: ./backend_ase64
+      context: ./backend_base64
       dockerfile: Dockerfile
     volumes:
-    - ./backend_ase64/src:/home/src
+    - ./backend_base64/src:/home/src
