@@ -1,1 +1,1 @@
-Repository for Docker Git Tutorial at AI Center
+Repository for Docker Git Tutorial @ AI Center
