@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  backend_main:
+    build: 
+      context: ./backend_main
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend_main/src:/home/src
+
+  backend_ase64:
+    build: 
+      context: ./backend_ase64
+      dockerfile: Dockerfile
+    volumes:
+    - ./backend_ase64/src:/home/src
