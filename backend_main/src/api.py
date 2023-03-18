@@ -1,5 +1,8 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, UploadFile
 import requests
+from PIL import Image, ImageDraw
+import io
+import base64
 
 app = FastAPI()
 
@@ -26,9 +29,26 @@ async def convert_to_csv(request: Request):
     return {"data": csv_lines, "message": "File converted successfully"}
 
 #Task 2
+@app.post("/bounding-box")
+async def draw_bounding_box(image_file: UploadFile, x_topleft: float, y_topleft : float, width: float, height: float):
+
+    image_bytes = await image_file.read()
+    img = Image.open(io.BytesIO(image_bytes)).convert("RGBA")
+       
+    if x_topleft + width < img.width or y_topleft + height < img.height:
+        return "Invalid bounding box"
+    
+    draw = ImageDraw.Draw(img)
+    
+    draw.rectangle((x_topleft, y_topleft, x_topleft + width, y_topleft + height), outline="red")
+
+    img_byte_arr = io.BytesIO()
+    img.save(img_byte_arr, format="PNG")
+    img_str = base64.b64encode(img_byte_arr.getvalue()).decode("ascii")
+
+    return {"image": img_str, "message": "Successfully drawn a bounding box"}
 
 #Task 3
-
 @app.get("/name-to-base64")
 def name_to_base64(name: str):
     if (name.lower() == "sunsun"):
